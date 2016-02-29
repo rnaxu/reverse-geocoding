@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+html, body {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    font-family: Meiryo, "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", Osaka, Arial, Sans-serif;
+    word-break: break-all;
+    line-height: 1.3;
+    img {
+        vertical-align: bottom;
+    }
+}
+
+#map {
+    height: 100%;
+}
