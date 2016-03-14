@@ -6,7 +6,7 @@
  * $ grunt
  *
  * 開発watch,connectコマンド
- * $ grunt w
+ * $ grunt live
  *
  ---------------------------------------------------------------------- */
 
@@ -113,7 +113,7 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // 
+    //
     uglify: {
       all: {
         files: [{

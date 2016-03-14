@@ -11,32 +11,33 @@
         },
         zoom: options.zoom
       });
+      this.infowindows = [];
       this.mapEvent();
+      this.getAddress(options);
     }
-    
+
+    // 地図のイベントをまとめたやつ
     Map.prototype.mapEvent = function() {
       var _this = this;
       var loadFlag;
+
+      // 地図の中心が動いた時
       this.gmap.addListener('center_changed', function() {
         clearTimeout(loadFlag);
         loadFlag = setTimeout(function(){
           var position = _this.getCenteLatLng();
-          _this.showMarker(position);
           _this.getAddress(position);
         }, 1000);
       });
+
+      // 地図がクリックされた時
+      this.gmap.addListener('click', function() {
+        for(var i = 0; i < _this.infowindows.length; i++) {
+          _this.infowindows[i].close();
+        }
+      });
     };
-    
-    // マーカーを表示する
-    Map.prototype.showMarker = function(latLng) {
-        var _this = this;
-        this.marker = new google.maps.Marker({
-            position: latLng,
-            map: _this.map
-        });
-        this.marker.setMap(this.gmap);
-    };
-    
+
     // GoogleMapの中心の緯度と経度を取得
     Map.prototype.getCenteLatLng = function() {
         var centerLtLn = this.gmap.getCenter();
@@ -45,7 +46,7 @@
             lng: centerLtLn.lng()
         };
     };
-    
+
     // 座標から住所を取得
     Map.prototype.getAddress = function(latLng) {
       var _this = this;
@@ -57,10 +58,10 @@
       };
       geocoder.geocode({'location': position}, function(results, status) {
         var address = '';
-        
+
         if (status === google.maps.GeocoderStatus.OK) {
           var resultLength = results.length;
-          
+
           for (var i = 0; i < resultLength; i++) {
 
               // typesがsublocality_level_~だったら
@@ -72,7 +73,7 @@
                   i = resultLength;
               }
           }
-          
+
           // typesにsublocality_level_~が存在しない場合
           if(address === '') {
               // typesがpremiseだったら
@@ -82,15 +83,16 @@
                   address = _this.noAddress;
               }
           }
-          
+
         } else {
           address = _this.noAddress;
         }
-        console.log(address);
+
+        _this.showInfoWindow(address, position);
       });
-      
+
     };
-    
+
     // GoogleMapから返ってきた住所を使いやすいように編集
     Map.prototype.formatAdress = function(mapAddress) {
       var _this = this;
@@ -106,7 +108,17 @@
 
       return address;
     };
-    
+
+    // インフォウィンドウを表示
+    Map.prototype.showInfoWindow = function(contentString, latLng) {
+      this.infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        position: latLng
+      });
+      this.infowindows.push(this.infowindow);
+      this.infowindow.open(this.gmap);
+    };
+
     return Map;
 
   })();
