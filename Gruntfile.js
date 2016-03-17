@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 
     path: {
       src: 'src/',
-      dist: 'dist/',
+      build: 'build/',
       hbs_src: 'src/hbs/',
       scss_src: 'src/scss/',
       js_src: 'src/js/',
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    clean: ['<%= path.dist %>'],
+    clean: ['<%= path.build %>'],
 
     /* html */
     assemble: {
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= path.hbs_src %>pages/',
           src: ['**/*.hbs'],
-          dest: '<%= path.dist %>'
+          dest: '<%= path.build %>'
         }]
       }
     },
@@ -68,7 +68,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= path.scss_src %>',
           src: ['**/*.scss'],
-          dest: '<%= path.dist %>css/',
+          dest: '<%= path.build %>css/',
           ext: '.css'
         }]
       },
@@ -79,25 +79,25 @@ module.exports = function (grunt) {
         browsers: ['last 2 versions']
       },
       all: {
-        src: '<%= path.dist %>css/**/*.css'
+        src: '<%= path.build %>css/**/*.css'
       }
     },
 
     csscomb: {
       all: {
         expand: true,
-        cwd: '<%= path.dist %>css/',
+        cwd: '<%= path.build %>css/',
         src: ['**/*.css'],
-        dest: '<%= path.dist %>css/',
+        dest: '<%= path.build %>css/',
       }
     },
 
     csso: {
       all: {
         expand: true,
-        cwd: '<%= path.dist %>css/',
+        cwd: '<%= path.build %>css/',
         src: ['**/*.css'],
-        dest: '<%= path.dist %>css/',
+        dest: '<%= path.build %>css/',
         options: {
           restructure: false
         }
@@ -106,41 +106,25 @@ module.exports = function (grunt) {
 
 
     /* js */
-    // browserify: {
-    //   app: {
-    //     files: {
-    //       '<%= path.dist %>/js/map_search.js': '<%= path.js_src %>/map_search.js'
-    //     }
-    //   }
-    // },
-    //
     uglify: {
       all: {
         files: [{
             expand: true,
             cwd: '<%= path.src %>js/',
             src: ['*.js', '!*.min.js'],
-            dest: '<%= path.dist %>js/',
+            dest: '<%= path.build %>js/',
             ext: '.min.js'
         }]
       }
     },
 
-    copy: {
-      // js: {
-      //   expand: true,
-      //   cwd: '<%= path.js_src %>',
-      //   src: ['map.js'],
-      //   dest: '<%= path.dist %>js/'
-      // },
-
-
     /* img */
+    copy: {
       img: {
         expand: true,
         cwd: '<%= path.img_src %>',
         src: ['**/*.{png,jpg}'],
-        dest: '<%= path.dist %>img/'
+        dest: '<%= path.build %>img/'
       }
     },
 
@@ -167,7 +151,7 @@ module.exports = function (grunt) {
       server: {
         options: {
           port: 1108,
-          base: 'dist/'
+          base: 'build/'
         }
       }
     }
