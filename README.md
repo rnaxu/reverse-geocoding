@@ -29,9 +29,12 @@ geometry: Object
 place_id: String
 types: Array[n]
 ```
-`東京都千代田区丸の内１丁目９−１`のような住所を取得するために必要な情報は`types`と`formatted_address`  
+`東京都千代田区丸の内１丁目９−１`のような住所を取得するために必要な情報は  
+`types`と`formatted_address`  
 
-`results`の各オブジェクトの`types`を見て、`types`が`sublocality_level_~`だったらそのオブジェクトの`formatted_address`を使う
+`results`の各オブジェクトの`types`を見て  
+`types`が`sublocality_level_~`だったら  
+そのオブジェクトの`formatted_address`を使う
 ```
 var address = '';
 var resultLength = results.length;
@@ -48,9 +51,11 @@ for (var i = 0; i < resultLength; i++) {
     }
 }
 ```
-`types`が`sublocality_level_~`のオブジェクトが存在しなかったら`types`が`premise`の`formatted_address`を使う  
+`types`が`sublocality_level_~`のオブジェクトが存在しなかったら  
+`types`が`premise`の`formatted_address`を使う  
 
-`premise`も存在しない場合、期待する形の住所を生成できないので「No results found」とアラート
+`premise`も存在しない場合、期待する形の住所を生成できないので  
+「No results found」とアラート
 ```
 // typesにsublocality_level_~が存在しない場合
 if(address === '') {
@@ -61,7 +66,10 @@ if(address === '') {
     }
 }
 ```
-`formatted_address`は`"日本, 〒100-0005 東京都千代田区丸の内１丁目９−１"`のような形になっているので、日本と郵便番号を取り除く  
+`formatted_address`は  
+`"日本, 〒100-0005 東京都千代田区丸の内１丁目９−１"`のような形になっているので  
+日本と郵便番号を取り除く  
+
 外国は今回対象としないので「No results found」とアラート
 ```
 function formatAddress(originalAdd) {
