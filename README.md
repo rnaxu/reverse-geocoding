@@ -87,4 +87,4 @@ function formatAddress(originalAdd) {
   return formattedAdd;
 }
 ```
-JSの詳細は<a href="https://github.com/rnaxu/reverse-geocoding/blob/master/src/js/map.js">こちら</a>
+JSは<a href="https://github.com/rnaxu/reverse-geocoding/blob/master/src/js/map.js">こちら</a>
